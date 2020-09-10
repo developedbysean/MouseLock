@@ -1,0 +1,10 @@
+C:\Users\gopac\source\repos\MouseLock\bin\Debug\MouseLock.exe.config
+C:\Users\gopac\source\repos\MouseLock\bin\Debug\MouseLock.exe
+C:\Users\gopac\source\repos\MouseLock\bin\Debug\MouseLock.pdb
+C:\Users\gopac\source\repos\MouseLock\obj\Debug\MouseLock.csprojAssemblyReference.cache
+C:\Users\gopac\source\repos\MouseLock\obj\Debug\MouseLock.Form1.resources
+C:\Users\gopac\source\repos\MouseLock\obj\Debug\MouseLock.Properties.Resources.resources
+C:\Users\gopac\source\repos\MouseLock\obj\Debug\MouseLock.csproj.GenerateResource.cache
+C:\Users\gopac\source\repos\MouseLock\obj\Debug\MouseLock.csproj.CoreCompileInputs.cache
+C:\Users\gopac\source\repos\MouseLock\obj\Debug\MouseLock.exe
+C:\Users\gopac\source\repos\MouseLock\obj\Debug\MouseLock.pdb
