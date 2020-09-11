@@ -16,12 +16,44 @@ namespace MouseLock
     {
         private int width;
         private int height;
-        private bool lockState;
-        
+        private bool lockState = false;
+        screen s;
         public Form1()
         {
             InitializeComponent();
+            InitializeBackgroundWorker();
+        }
+        private void InitializeBackgroundWorker()
+        {
+            backgroundWorker1.WorkerSupportsCancellation = true;
+            backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
 
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            do
+            {
+                int x = Control.MousePosition.X;
+                int y = Control.MousePosition.Y;
+                if (x < s.Zero)
+                {
+                    Cursor.Position = new Point(10, y);
+                }
+                if (y < s.Zero)
+                {
+                    Cursor.Position = new Point(x, 10);
+                }
+                if (x > s.Width)
+                {
+                    Cursor.Position = new Point(s.Width - 10, y);
+                }
+                if (y > s.Height)
+                {
+                    Cursor.Position = new Point(x, s.Height - 10);
+                }
+            } while (lockState);
+            backgroundWorker1.CancelAsync();
         }
 
         private void txtWidth_Leave(object sender, EventArgs e)
@@ -45,13 +77,19 @@ namespace MouseLock
             {
                 width = int.Parse(txtWidth.Text);
                 height = int.Parse(txtLength.Text);
-
+                
                 if (width == 0)
                 {
                     throw new Exception();
                 }
-                lockState = true;
-                lockToggle(lockState);
+
+                s = new screen(width, height);
+                lockToggle(true);
+                btnStop.Enabled = true;
+                if (!backgroundWorker1.IsBusy)
+                {
+                    backgroundWorker1.RunWorkerAsync();
+                }
 
             }
             catch (FormatException)
@@ -64,6 +102,17 @@ namespace MouseLock
             }
         }
 
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            lockToggle(false);
+
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
         private void autoDetect()
         {
             txtWidth.Text = getActiveScreenSize()[0].ToString();
@@ -72,39 +121,7 @@ namespace MouseLock
 
         private void lockToggle(bool state)
         {
-            screen screen = new screen(width, height);
-            
-            do
-            {
-                int x = Control.MousePosition.X;
-                int y = Control.MousePosition.Y;
-                if (x < screen.Zero)
-                {
-                    Cursor.Position = new Point(3, y);
-                }
-                if (y < screen.Zero)
-                {
-                    Cursor.Position = new Point(x, 3);
-                }
-                if (x > screen.Width)
-                {
-                    Cursor.Position = new Point(screen.Width - 3, y);
-                }
-                if (y > screen.Height)
-                {
-                    Cursor.Position = new Point(x, screen.Height - 3);
-                }
-                if (Control.IsKeyLocked(Keys.NumLock))
-                {
-                    state = false;
-                }
-            } while (state);
-        }
-
-        
-        private void btnStop_Click(object sender, EventArgs e)
-        {
-            lockToggle(false);
+            lockState = state;
         }
 
         private void btnAutoDetect_Click(object sender, EventArgs e)
@@ -112,5 +129,12 @@ namespace MouseLock
             autoDetect();
         }
 
+        private void btnStop_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Escape)
+            {
+                lockToggle(false);
+            }
+        }
     }
 }

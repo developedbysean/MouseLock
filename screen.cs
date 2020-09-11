@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace MouseLock
+﻿namespace MouseLock
 {
-    
+
     class screen
     {
         private int width;
         private int height;
         private int zero = 0;
-
         public screen(int w, int h)
         {
             width = w;
@@ -35,8 +27,8 @@ namespace MouseLock
         public int Zero
         {
             get { return zero; }
-            set { zero = height; }
+            set { zero = value; }
         }
-
+     
     }
 }
